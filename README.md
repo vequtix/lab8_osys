@@ -21,9 +21,9 @@
 
 ---
 
-## Шпаргалка команд для демонстрации преподавателю
+## Демонстрация заданий
 
-### Задание 1 — SQLiteFS (`task1_sqlitefs/`)
+### Задание 1 - SQLiteFS (`task1_sqlitefs/`)
 
 ```bash
 cd task1_sqlitefs
@@ -51,7 +51,7 @@ exit
 
 ---
 
-### Задание 2 — Benchmark S3 (`task2_s3_benchmark/`)
+### Задание 2 - Benchmark S3 (`task2_s3_benchmark/`)
 
 ```bash
 cd task2_s3_benchmark
@@ -75,7 +75,7 @@ docker compose down -v
 
 ---
 
-### Задание 3 — Гибридное хранилище TechData Solutions (`task3_hybrid_storage/`)
+### Задание 3 - Гибридное хранилище TechData Solutions (`task3_hybrid_storage/`)
 
 ```bash
 cd task3_hybrid_storage
