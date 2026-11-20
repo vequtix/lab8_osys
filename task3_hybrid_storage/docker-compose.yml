@@ -1,0 +1,98 @@
+services:
+  # Upstream minio/minio & minio/mc were removed from Docker Hub; pgsty/* provides drop-in multi-arch (ARM64 + AMD64) images.
+  minio:
+    image: pgsty/minio:latest
+    container_name: task3-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  createbuckets:
+    image: pgsty/mc:latest
+    container_name: task3-createbuckets
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        mc alias set local http://minio:9000 minioadmin minioadmin123
+        mc mb --ignore-existing local/hybrid-storage
+        mc ls local
+
+  s3fs:
+    build:
+      context: .
+      dockerfile: Dockerfile.s3fs
+    container_name: task3-s3fs
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+    devices:
+      - /dev/fuse:/dev/fuse
+    depends_on:
+      minio:
+        condition: service_healthy
+      createbuckets:
+        condition: service_completed_successfully
+    environment:
+      S3_ENDPOINT: http://minio:9000
+      S3_BUCKET: hybrid-storage
+      AWS_ACCESS_KEY_ID: minioadmin
+      AWS_SECRET_ACCESS_KEY: minioadmin123
+    volumes:
+      # On native Linux hosts, bind-mount propagation (:rshared) can propagate /mnt/s3 across namespaces;
+      # on Docker Desktop macOS named volumes are used to avoid host_mnt BindOptions errors, and app-entrypoint ensures /data/warm mounts the same S3 bucket.
+      - s3fs_mount:/mnt/s3
+    healthcheck:
+      test: ["CMD-SHELL", "grep -qs ' /mnt/s3 fuse' /proc/mounts"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 3s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    container_name: task3-app
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+    devices:
+      - /dev/fuse:/dev/fuse
+    depends_on:
+      s3fs:
+        condition: service_healthy
+    environment:
+      S3_ENDPOINT: http://minio:9000
+      S3_BUCKET: hybrid-storage
+      AWS_ACCESS_KEY_ID: minioadmin
+      AWS_SECRET_ACCESS_KEY: minioadmin123
+      HOT_PATH: /data/hot
+      WARM_PATH: /data/warm
+      COLD_PATH: /data/cold
+    volumes:
+      - hot_storage:/data/hot
+      - s3fs_mount:/data/warm
+      - cold_storage:/data/cold
+    stdin_open: true
+    tty: true
+
+volumes:
+  minio_data:
+  s3fs_mount:
+  hot_storage:
+  cold_storage:

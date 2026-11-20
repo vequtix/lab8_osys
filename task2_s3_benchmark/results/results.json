@@ -1,0 +1,244 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-11-19T23:57:12.831339+00:00",
+    "quick": false,
+    "platform": "Linux-6.12.76-linuxkit-x86_64-with-glibc2.35",
+    "machine": "x86_64",
+    "endpoint": "http://minio:9000",
+    "bucket": "benchmark",
+    "storages": [
+      "s3fs",
+      "goofys",
+      "boto3"
+    ],
+    "workloads": [
+      "sequential_write",
+      "sequential_read",
+      "random_io",
+      "small_files",
+      "metadata_ops"
+    ]
+  },
+  "results": {
+    "sequential_write": {
+      "s3fs": {
+        "name": "s3fs:sequential_write",
+        "storage": "s3fs",
+        "workload": "sequential_write",
+        "iterations": 100,
+        "total_bytes": 104857600,
+        "total_time_sec": 1.3212,
+        "throughput_mbps": 75.6859,
+        "iops": 75.69,
+        "latency_avg_ms": 13.212,
+        "latency_p95_ms": 14.852,
+        "latency_p99_ms": 20.462,
+        "errors": 0
+      },
+      "goofys": {
+        "name": "goofys:sequential_write",
+        "storage": "goofys",
+        "workload": "sequential_write",
+        "iterations": 100,
+        "total_bytes": 104857600,
+        "total_time_sec": 1.5078,
+        "throughput_mbps": 66.3211,
+        "iops": 66.32,
+        "latency_avg_ms": 15.078,
+        "latency_p95_ms": 20.986,
+        "latency_p99_ms": 29.454,
+        "errors": 0
+      },
+      "boto3": {
+        "name": "boto3:sequential_write",
+        "storage": "boto3",
+        "workload": "sequential_write",
+        "iterations": 100,
+        "total_bytes": 104857600,
+        "total_time_sec": 1.1505,
+        "throughput_mbps": 86.9199,
+        "iops": 86.92,
+        "latency_avg_ms": 11.505,
+        "latency_p95_ms": 12.31,
+        "latency_p99_ms": 13.29,
+        "errors": 0
+      }
+    },
+    "sequential_read": {
+      "s3fs": {
+        "name": "s3fs:sequential_read",
+        "storage": "s3fs",
+        "workload": "sequential_read",
+        "iterations": 100,
+        "total_bytes": 104857600,
+        "total_time_sec": 0.4311,
+        "throughput_mbps": 231.9848,
+        "iops": 231.98,
+        "latency_avg_ms": 4.311,
+        "latency_p95_ms": 6.734,
+        "latency_p99_ms": 10.714,
+        "errors": 0
+      },
+      "goofys": {
+        "name": "goofys:sequential_read",
+        "storage": "goofys",
+        "workload": "sequential_read",
+        "iterations": 100,
+        "total_bytes": 104857600,
+        "total_time_sec": 0.4213,
+        "throughput_mbps": 237.339,
+        "iops": 237.34,
+        "latency_avg_ms": 4.213,
+        "latency_p95_ms": 6.973,
+        "latency_p99_ms": 7.749,
+        "errors": 0
+      },
+      "boto3": {
+        "name": "boto3:sequential_read",
+        "storage": "boto3",
+        "workload": "sequential_read",
+        "iterations": 100,
+        "total_bytes": 104857600,
+        "total_time_sec": 0.4638,
+        "throughput_mbps": 215.6135,
+        "iops": 215.61,
+        "latency_avg_ms": 4.638,
+        "latency_p95_ms": 5.382,
+        "latency_p99_ms": 6.009,
+        "errors": 0
+      }
+    },
+    "random_io": {
+      "s3fs": {
+        "name": "s3fs:random_io",
+        "storage": "s3fs",
+        "workload": "random_io",
+        "iterations": 200,
+        "total_bytes": 819200,
+        "total_time_sec": 0.4545,
+        "throughput_mbps": 1.719,
+        "iops": 440.05,
+        "latency_avg_ms": 2.272,
+        "latency_p95_ms": 3.166,
+        "latency_p99_ms": 3.43,
+        "errors": 0
+      },
+      "goofys": {
+        "name": "goofys:random_io",
+        "storage": "goofys",
+        "workload": "random_io",
+        "iterations": 200,
+        "total_bytes": 819200,
+        "total_time_sec": 0.3651,
+        "throughput_mbps": 2.1396,
+        "iops": 547.73,
+        "latency_avg_ms": 1.826,
+        "latency_p95_ms": 3.439,
+        "latency_p99_ms": 4.582,
+        "errors": 0
+      },
+      "boto3": {
+        "name": "boto3:random_io",
+        "storage": "boto3",
+        "workload": "random_io",
+        "iterations": 200,
+        "total_bytes": 819200,
+        "total_time_sec": 0.3532,
+        "throughput_mbps": 2.212,
+        "iops": 566.27,
+        "latency_avg_ms": 1.766,
+        "latency_p95_ms": 3.182,
+        "latency_p99_ms": 4.308,
+        "errors": 0
+      }
+    },
+    "small_files": {
+      "s3fs": {
+        "name": "s3fs:small_files",
+        "storage": "s3fs",
+        "workload": "small_files",
+        "iterations": 1000,
+        "total_bytes": 4096000,
+        "total_time_sec": 3.4427,
+        "throughput_mbps": 1.1347,
+        "iops": 290.47,
+        "latency_avg_ms": 3.443,
+        "latency_p95_ms": 4.486,
+        "latency_p99_ms": 5.877,
+        "errors": 0
+      },
+      "goofys": {
+        "name": "goofys:small_files",
+        "storage": "goofys",
+        "workload": "small_files",
+        "iterations": 1000,
+        "total_bytes": 4096000,
+        "total_time_sec": 2.9225,
+        "throughput_mbps": 1.3366,
+        "iops": 342.18,
+        "latency_avg_ms": 2.922,
+        "latency_p95_ms": 4.289,
+        "latency_p99_ms": 6.579,
+        "errors": 0
+      },
+      "boto3": {
+        "name": "boto3:small_files",
+        "storage": "boto3",
+        "workload": "small_files",
+        "iterations": 1000,
+        "total_bytes": 4096000,
+        "total_time_sec": 2.082,
+        "throughput_mbps": 1.8762,
+        "iops": 480.32,
+        "latency_avg_ms": 2.082,
+        "latency_p95_ms": 2.733,
+        "latency_p99_ms": 3.516,
+        "errors": 0
+      }
+    },
+    "metadata_ops": {
+      "s3fs": {
+        "name": "s3fs:metadata_ops",
+        "storage": "s3fs",
+        "workload": "metadata_ops",
+        "iterations": 200,
+        "total_bytes": 0,
+        "total_time_sec": 0.6773,
+        "throughput_mbps": 0.0,
+        "iops": 295.28,
+        "latency_avg_ms": 3.387,
+        "latency_p95_ms": 3.994,
+        "latency_p99_ms": 4.642,
+        "errors": 0
+      },
+      "goofys": {
+        "name": "goofys:metadata_ops",
+        "storage": "goofys",
+        "workload": "metadata_ops",
+        "iterations": 200,
+        "total_bytes": 0,
+        "total_time_sec": 0.7507,
+        "throughput_mbps": 0.0,
+        "iops": 266.42,
+        "latency_avg_ms": 3.753,
+        "latency_p95_ms": 6.331,
+        "latency_p99_ms": 7.986,
+        "errors": 0
+      },
+      "boto3": {
+        "name": "boto3:metadata_ops",
+        "storage": "boto3",
+        "workload": "metadata_ops",
+        "iterations": 200,
+        "total_bytes": 0,
+        "total_time_sec": 0.9357,
+        "throughput_mbps": 0.0,
+        "iops": 213.75,
+        "latency_avg_ms": 4.678,
+        "latency_p95_ms": 8.545,
+        "latency_p99_ms": 10.259,
+        "errors": 0
+      }
+    }
+  }
+}

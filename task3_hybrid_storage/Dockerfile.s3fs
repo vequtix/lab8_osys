@@ -1,0 +1,17 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    s3fs \
+    fuse \
+    curl \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && if [ -f /etc/fuse.conf ]; then sed -i 's/^#user_allow_other/user_allow_other/' /etc/fuse.conf; fi \
+    && mkdir -p /mnt/s3 /tmp/s3cache
+
+COPY scripts/s3fs-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
